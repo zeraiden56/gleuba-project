@@ -1,0 +1,163 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Ranking de Municípios | IBGE API",
+        "description": "API para análise e ranking de municípios brasileiros com base em dados socioeconômicos e de desenvolvimento.",
+        "contact": {
+            "email": "arthurcostadias1@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Servidor local"
+        }
+    ],
+    "paths": {
+        "/api/municipios": {
+            "get": {
+                "tags": [
+                    "Municípios"
+                ],
+                "summary": "Lista todos os municípios",
+                "operationId": "36b05f8f3473646aba52c148a5a5aee7",
+                "responses": {
+                    "200": {
+                        "description": "Lista de municípios retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Municipio"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/municipios/{id}": {
+            "get": {
+                "tags": [
+                    "Municípios"
+                ],
+                "summary": "Exibe dados de um município específico",
+                "operationId": "05b892f05cf40e50a29df55bf1c0f51e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Município encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Município não encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Municipio": {
+                "title": "Município",
+                "description": "Informações detalhadas sobre o município",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "cidade": {
+                        "type": "string",
+                        "example": "São Paulo"
+                    },
+                    "uf": {
+                        "type": "string",
+                        "example": "SP"
+                    },
+                    "codigo_ibge": {
+                        "type": "integer",
+                        "example": 3550308
+                    },
+                    "populacao": {
+                        "type": "integer",
+                        "example": 1234567
+                    },
+                    "pib": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 55000000000
+                    },
+                    "pib_per_capita": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 45000.55
+                    },
+                    "pib_pcpt_mes": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 3750.45
+                    },
+                    "cresc_pib_10y": {
+                        "description": "Crescimento do PIB em 10 anos (%)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 12.5
+                    },
+                    "cresc_pib_5y": {
+                        "description": "Crescimento do PIB em 5 anos (%)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 6.2
+                    },
+                    "med_pib_5y": {
+                        "description": "Média do PIB nos últimos 5 anos (R$)",
+                        "type": "number",
+                        "format": "float",
+                        "example": 3.4
+                    },
+                    "ind_viol": {
+                        "description": "Índice de violência",
+                        "type": "number",
+                        "format": "float",
+                        "example": 78.5
+                    },
+                    "abemp_per_capita": {
+                        "description": "Empresas abertas por mil habitantes",
+                        "type": "number",
+                        "format": "float",
+                        "example": 120
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Municípios",
+            "description": "Municípios"
+        }
+    ]
+}

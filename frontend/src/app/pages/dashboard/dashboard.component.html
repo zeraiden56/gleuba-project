@@ -1,0 +1,72 @@
+<div class="min-h-screen bg-gray-100 p-6">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">CDT | Controle e Administração de Glebas</h1>
+
+    <div class="flex justify-between items-center mb-4">
+      <input
+        type="text"
+        placeholder="Pesquisar cidade ou UF..."
+        [(ngModel)]="search"
+        (keyup.enter)="fetchData()"
+        class="border border-gray-300 rounded-md px-4 py-2 w-1/3"
+      />
+      <button
+        (click)="fetchData()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+      >
+        Pesquisar
+      </button>
+    </div>
+
+    <div *ngIf="loading" class="text-center py-8 text-gray-500">Carregando...</div>
+
+    <div *ngIf="!loading">
+      <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <tr>
+            <th class="py-3 px-6 text-left">#</th>
+            <th class="py-3 px-6 text-left">Cidade</th>
+            <th class="py-3 px-6 text-left">UF</th>
+            <th class="py-3 px-6 text-right">Índice</th>
+            <th class="py-3 px-6 text-right">PIB per capita</th>
+            <th class="py-3 px-6 text-right">Remuneração</th>
+            <th class="py-3 px-6 text-right">Empresas abertas</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-700 text-sm font-light">
+          <tr
+            *ngFor="let m of municipios; let i = index"
+            class="border-b border-gray-200 hover:bg-gray-100"
+          >
+            <td class="py-2 px-6">{{ (currentPage - 1) * 50 + i + 1 }}</td>
+            <td class="py-2 px-6">{{ m.cidade }}</td>
+            <td class="py-2 px-6">{{ m.uf }}</td>
+            <td class="py-2 px-6 text-right font-semibold">{{ m.indice | number: '1.1-2' }}</td>
+            <td class="py-2 px-6 text-right">{{ formatCurrency(m.pib_per_capita) }}</td>
+            <td class="py-2 px-6 text-right">{{ formatCurrency(m.remm_mes) }}</td>
+            <td class="py-2 px-6 text-right">{{ formatCurrency(m.abert_emp) }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Paginação -->
+      <div class="mt-4 flex justify-end items-center space-x-2">
+        <button
+          (click)="fetchData(currentPage - 1)"
+          [disabled]="currentPage === 1"
+          class="px-3 py-1 bg-gray-300 hover:bg-gray-400 rounded disabled:opacity-50"
+        >
+          Anterior
+        </button>
+        <span class="text-gray-700">Página {{ currentPage }}</span>
+        <button
+          (click)="fetchData(currentPage + 1)"
+          [disabled]="!meta?.next_page_url"
+          class="px-3 py-1 bg-gray-300 hover:bg-gray-400 rounded disabled:opacity-50"
+        >
+          Próxima
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

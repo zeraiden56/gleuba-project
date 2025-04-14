@@ -1,0 +1,28 @@
+<div class="min-h-screen bg-gray-100 p-6">
+  <h1 class="text-3xl font-bold text-center mb-6">Dashboard Municipal IBGE</h1>
+  
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
+      <thead class="bg-gray-200 text-gray-600 uppercase text-xs leading-normal">
+        <tr>
+          <th class="py-3 px-6 text-left">Posição</th>
+          <th class="py-3 px-6 text-left">Cidade</th>
+          <th class="py-3 px-6 text-left">UF</th>
+          <th class="py-3 px-6 text-right">Nota</th>
+          <th class="py-3 px-6 text-right">PIB per capita</th>
+          <th class="py-3 px-6 text-right">População</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of municipios" class="border-b border-gray-200 hover:bg-gray-100">
+          <td class="py-2 px-6">{{ m.posicao }}</td>
+          <td class="py-2 px-6">{{ m.cidade }}</td>
+          <td class="py-2 px-6">{{ m.uf }}</td>
+          <td class="py-2 px-6 text-right font-semibold">{{ m.indice | number:'1.1-2' }}</td>
+          <td class="py-2 px-6 text-right">{{ m.pib_per_capita | currency:'BRL':'symbol-narrow' }}</td>
+          <td class="py-2 px-6 text-right">{{ m.populacao | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
